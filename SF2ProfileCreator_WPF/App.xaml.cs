@@ -9,6 +9,7 @@ namespace SF2ProfileCreator_WPF
     /// </summary>
     public partial class App : System.Windows.Application
     {
+        
     }
 
 }

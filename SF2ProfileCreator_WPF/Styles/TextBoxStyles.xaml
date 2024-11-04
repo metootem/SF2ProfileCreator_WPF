@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="#FF2D2D2D"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+</ResourceDictionary>

@@ -5,15 +5,626 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SF2ProfileCreator_WPF.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="420" d:DesignWidth="560">
-    <UserControl.Resources>
-        <Style TargetType="TabItem">
-            
-        </Style>
-    </UserControl.Resources>
+             d:DesignHeight="420" d:DesignWidth="880">
+
     <Grid>
-        <TabControl TabStripPlacement="Left">
-            <TabItem Header="Main Props"/>
+        <TabControl x:Name="tabProfileProps" 
+                    TabStripPlacement="Left" 
+                    Background="#FF525252">
+            <TabItem Header="Info" Style="{StaticResource ProfilePropsTabItem}">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Path: "/>
+                        <Label Grid.Column="1" Content="{Binding FilePath}"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Pack: "/>
+                        <Label Grid.Column="1" Content="{Binding FilePath}"/>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Profile Name: "/>
+                        <TextBox x:Name="txtProfileName" Grid.Column="1" MinWidth="200"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Main" Style="{StaticResource ProfilePropsTabItem}">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <!--Name-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Name: " HorizontalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="txtBossName" Margin="2" MinWidth="100"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Type-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Type: " HorizontalAlignment="Center"/>
+                        <ComboBox x:Name="cmbxProfileType" Grid.Column="1" Margin="2" MinWidth="70" SelectionChanged="cmbxProfileType_SelectionChanged">
+                            <TextBlock Text="Statue"/>
+                            <TextBlock Text="Chaser"/>
+                        </ComboBox>
+                    </Grid>
+
+                    <Grid>
+                        <!--Eye Position-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Eye Position: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmEyePos1" Grid.Column="1" Margin="2"/>
+                        <local:NumericUpDown x:Name="nmEyePos2" Grid.Column="2" Margin="2"/>
+                        <local:NumericUpDown x:Name="nmEyePos3" Grid.Column="3" Margin="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Eye Angle-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Eye Angle Offset: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmEyeAng1" Grid.Column="1" Margin="2"/>
+                        <local:NumericUpDown x:Name="nmEyeAng2" Grid.Column="2" Margin="2"/>
+                        <local:NumericUpDown x:Name="nmEyeAng3" Grid.Column="3" Margin="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Mins-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Mins: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmMins1" Grid.Column="1" Margin="2"/>
+                        <local:NumericUpDown x:Name="nmMins2" Grid.Column="2" Margin="2"/>
+                        <local:NumericUpDown x:Name="nmMins3" Grid.Column="3" Margin="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Maxs-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Maxs: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmMaxs1" Grid.Column="1" Margin="2"/>
+                        <local:NumericUpDown x:Name="nmMaxs2" Grid.Column="2" Margin="2"/>
+                        <local:NumericUpDown x:Name="nmMaxs3" Grid.Column="3" Margin="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Kill Radius-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Kill Radius: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmKillRadius" Grid.Column="1" Margin="2"/>
+                    </Grid>
+
+                    <!--Kill Cooldown-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Kill Cooldown: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmKillCoolDown" Grid.Column="1" DecimalPlaces="1" Value="0.0" Margin="2"/>
+                    </Grid>
+
+                    <!--Use Raid Hitbox-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Use Raid Hitbox: " HorizontalAlignment="Center"/>
+                        <CheckBox x:Name="chkRaidHitbox" Grid.Column="1" VerticalAlignment="Center" Margin="0, 3, 0, 0"/>
+                    </Grid>
+
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Selection" Style="{StaticResource ProfilePropsTabItem}">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <!--Random Selection-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Random Selection: " HorizontalAlignment="Center"/>
+                        <CheckBox x:Name="chkRandSel" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Random Boxing Selection-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Random Boxing Selection: " HorizontalAlignment="Center"/>
+                        <CheckBox x:Name="chkRandBoxinSel" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Random Revenant Selection-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Random Revenant Selection: " HorizontalAlignment="Center"/>
+                        <CheckBox x:Name="chkRandRevSel" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Random Revenant Admin Selection-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Random Revenant Admin Selection: " HorizontalAlignment="Center"/>
+                        <CheckBox x:Name="chkRandRevAdmSel" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Admin Only-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Admin Only: " HorizontalAlignment="Center"/>
+                        <CheckBox x:Name="chkAdminOnlySel" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Model" Style="{StaticResource ProfilePropsTabItem}">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <!--Model-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Model: "/>
+                        <TextBox x:Name="txtModelPath" Grid.Column="1" Margin="2" MinWidth="300"/>
+                        <Button x:Name="btnModelPath" Grid.Column="2" Content="..." Margin="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Model Scale-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Model Scale: " VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmModelScale" Grid.Column="1" Value="1.0" DecimalPlaces="1" Margin="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Effect RenderFX-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Effect RenderFX: " VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cmbxRenderFX" Grid.Column="1" MinWidth="100" Margin="5" SelectedIndex="0">
+                            <TextBlock Text="RENDERFX_NONE"/>
+                            <TextBlock Text="RENDERFX_PULSE_SLOW">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Pulse_Slow.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            
+                            <TextBlock Text="RENDERFX_PULSE_FAST">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Pulse_Fast.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_PULSE_SLOW_WIDE">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Pulse_Slow_Wide.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_PULSE_FAST_WIDE">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Pulse_Fast_Wide.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_FADE_SLOW">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Fade_Slow.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_FADE_FAST">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Fade_Fast.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_SOLID_SLOW" ToolTip="Model Appears Invisible. NOT RECOMMENDED"/>
+                            <TextBlock Text="RENDERFX_SOLID_FAST" ToolTip="Model Appears Invisible. NOT RECOMMENDED"/>
+
+                            <TextBlock Text="RENDERFX_STROBE_SLOW">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Strobe_Slow.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_STROBE_FAST">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Strobe_Fast.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_STROBE_FASTER">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Strobe_Faster.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_FLICKER_SLOW">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Flicker_Slow.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_FLICKER_FAST">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Flicker_Fast.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_NO_DISSIPATION" ToolTip="Model Appears Invisible. NOT RECOMMENDED"/>
+
+                            <TextBlock Text="RENDERFX_DISTORT">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Distort.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_HOLOGRAM">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Hologram.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_EXPLODE">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Explode.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_GLOWSHELL" ToolTip="No Effect."/>
+                            <TextBlock Text="RENDERFX_CLAMP_MIN_SCALE" ToolTip="No Effect."/>
+                            <TextBlock Text="RENDERFX_ENV_RAIN" ToolTip="No Effect."/>
+                            <TextBlock Text="RENDERFX_ENV_SNOW" ToolTip="No Effect."/>
+                            <TextBlock Text="RENDERFX_SPOTLIGHT" ToolTip="No Effect."/>
+
+                            <TextBlock Text="RENDERFX_RAGDOLL">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Ragdoll.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDERFX_PULSE_FAST_WIDER">
+                                <TextBlock.ToolTip>
+                                    <local:MediaToolTip Header="Preview:"
+                            MediaSource="Videos\RenderFX\RenderFX_Pulse_Fast_Wider.mp4"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </ComboBox>
+                    </Grid>
+
+                    <Grid>
+                        <!--Effect Render Mode-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Effect Render Mode: " VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cmbxRenderMode" Grid.Column="1" MinWidth="100" Margin="5" SelectedIndex="0">
+                            
+                            <TextBlock Text="RENDER_NORMAL">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Default, model can be colored but can't be transparent. Effect Render Color: 255 0 0 200"
+                            ImageSource="/Images/RenderModes/RENDER_NORMAL_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_TRANSCOLOR">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Allows model transparency. Effect Render Color: 255 0 0 200"
+                            ImageSource="/Images/RenderModes/RENDER_TRANSCOLOR_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_TRANSTEXTURE">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Same as RENDER_TRANSCOLOR. Effect Render Color: 255 0 0 200"
+                            ImageSource="/Images/RenderModes/RENDER_TRANSCOLOR_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_GLOW">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Same as RENDER_TRANSCOLOR. Effect Render Color: 255 0 0 200"
+                            ImageSource="/Images/RenderModes/RENDER_TRANSCOLOR_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_TRANSALPHA">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Same as RENDER_TRANSCOLOR. Effect Render Color: 255 0 0 200"
+                                                        ImageSource="/Images/RenderModes/RENDER_TRANSCOLOR_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_TRANSADD">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Same as RENDER_TRANSCOLOR. Effect Render Color: 255 0 0 200"
+                            ImageSource="/Images/RenderModes/RENDER_TRANSCOLOR_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_ENVIRONMENTAL">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Only the model's dynamic shadow is left behind."
+                            ImageSource="/Images/RenderModes/RENDER_ENVIRONMENTAL_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_TRANSADDFRAMEBLEND">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Same as RENDER_TRANSCOLOR. Effect Render Color: 255 0 0 200"
+                            ImageSource="/Images/RenderModes/RENDER_TRANSCOLOR_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_TRANSALPHAADD">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Same as RENDER_TRANSCOLOR. Effect Render Color: 255 0 0 200"
+                            ImageSource="/Images/RenderModes/RENDER_TRANSCOLOR_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_WORLDGLOW">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Same as RENDER_TRANSCOLOR. Effect Render Color: 255 0 0 200"
+                            ImageSource="/Images/RenderModes/RENDER_TRANSCOLOR_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock Text="RENDER_NONE">
+                                <TextBlock.ToolTip>
+                                    <local:ImageToolTip Header="Model doesn't render."
+                            ImageSource="/Images/RenderModes/RENDER_NONE_1.png"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+
+                        </ComboBox>
+                    </Grid>
+
+                    <Grid>
+                        <!--Effect Render Color-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Effect Render Color: " VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmEffectRenderColor1" Grid.Column="1" Margin="5" Value="255"/>
+                        <local:NumericUpDown x:Name="nmEffectRenderColor2" Grid.Column="2" Margin="5" Value="255"/>
+                        <local:NumericUpDown x:Name="nmEffectRenderColor3" Grid.Column="3" Margin="5" Value="255"/>
+                        <local:NumericUpDown x:Name="nmEffectRenderColor4" Grid.Column="4" Margin="5" Value="255"/>
+                    </Grid>
+
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Copies" Style="{StaticResource ProfilePropsTabItem}">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Copies"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="--" Style="{StaticResource ProfilePropsTabItemDivider}" IsEnabled="False" />
+
+            <TabItem x:Name="tabStatue" Header="Statue" Style="{StaticResource ProfilePropsTabItem}" Visibility="Collapsed">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <!--Model Average Distance-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Model Average Distance: "/>
+                        <TextBox x:Name="txtModelAvgDistPath" Grid.Column="1" Margin="2" MinWidth="300"/>
+                        <Button x:Name="btnModelAvgDistPath" Grid.Column="2" Content="..." Margin="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Model Close Distance-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Model Close Distance: "/>
+                        <TextBox x:Name="txtModelCloseDistPath" Grid.Column="1" Margin="2" MinWidth="300"/>
+                        <Button x:Name="btnModelCloseDistPath" Grid.Column="2" Content="..." Margin="2"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Statue Chase Duration-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Statue Chase Duration: " VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmStatueChaseDur" Grid.Column="1" Margin="5" DecimalPlaces="1" Value="2.5"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Statue Chase Duration Add Visible Min-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Statue Chase Duration Add Visible Minimum: " VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmStatueChaseDurAddVisMin" Grid.Column="1" Margin="5" DecimalPlaces="3" Value="0.025"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Statue Chase Duration-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Statue Chase Duration Add Visible Maximum: " VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmStatueChaseDurAddVisMax" Grid.Column="1" Margin="5" DecimalPlaces="3" Value="0.15"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem x:Name="tabChaser" Header="Chaser" Style="{StaticResource ProfilePropsTabItem}" >
+                <StackPanel Margin="5">
+                    <Grid>
+                        <!--FOV-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="FOV: " VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmChaserFov" Grid.Column="1" Margin="5" Value="0"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Wake Radius-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Wake Radius: " VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmChaserWakeRadius" Grid.Column="1" Margin="5" Value="0"/>
+                    </Grid>
+
+                    <Grid>
+                        <!--Max Yaw Rate-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Max Yaw Rate: " VerticalAlignment="Center"/>
+                        <local:NumericUpDown x:Name="nmChaserYawRate" Grid.Column="1" Margin="5" DecimalPlaces="1" Value="250.0"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
         </TabControl>
+        <Grid x:Name="gridRawProfile"
+              HorizontalAlignment="Right"
+              Width="25"
+              MinWidth="25"
+              >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnRawProfile"
+                    Width="10"
+                    Height="50"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="0, 25, 0 , 0"
+                    Background="Transparent"
+                    PreviewMouseLeftButtonDown="btnRawProfile_MouseLeftButtonDown"
+                    PreviewMouseLeftButtonUp="btnRawProfile_PreviewMouseLeftButtonUp"
+                    PreviewMouseMove="btnRawProfile_MouseMove" 
+                    Cursor="Arrow">
+                <Border Background="#1e1e1e"
+                        Width="10"
+                        CornerRadius="10, 0, 0, 10"/>
+            </Button>
+            <Border Grid.Column="1"
+                    Margin="0, 10, 10, 10" 
+                    Background="#1e1e1e" 
+                    CornerRadius="15">
+                <TextBox x:Name="txtProfileRaw" 
+                         Margin="10"
+                         VerticalContentAlignment="Top"
+                         FontSize="12"
+                         AcceptsReturn="True"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            </Border>
+
+        </Grid>
     </Grid>
 </UserControl>

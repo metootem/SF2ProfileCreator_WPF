@@ -1,7 +1,10 @@
 ﻿using Microsoft.Win32;
+using SF2ProfileCreator_WPF.UserControls;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using WinControls = System.Windows.Controls;
+using System.Windows.Controls;
 
 namespace SF2ProfileCreator_WPF
 {
@@ -10,9 +13,51 @@ namespace SF2ProfileCreator_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+
+            LoadConfig();
+        }
+
+        private void LoadConfig()
+        {
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\config.cfg"))
+            {
+                string[] config = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\config.cfg");
+                if (config.Length < 1)
+                {
+                    Trace.WriteLine("profilePathSetting= Not Found.");
+                    return;
+                }
+                if (config[0].Contains("profilePathSetting="))
+                {
+                    bool val = false;
+                    string output = string.Empty;
+                    foreach (char c in config[0])
+                    {
+                        if (val)
+                            output += c;
+                        if (c == '=')
+                            val = true;
+                    }
+                    txtProfilesPath.Text = output;
+                    Trace.WriteLine("profilePathSetting=" + txtProfilesPath.Text);
+                }
+            }
+            else
+                Trace.WriteLine("Config Not Found.");
+        }
+
+        private void menuTitleBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //DragMove();
+        }
+
+        private void menuTitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //DragMove();
         }
 
         private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -22,7 +67,7 @@ namespace SF2ProfileCreator_WPF
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         private void btnResize_Click(object sender, RoutedEventArgs e)
@@ -37,7 +82,7 @@ namespace SF2ProfileCreator_WPF
         {
             this.WindowState = WindowState.Minimized;
         }
-        private void txtProfilesPath_TextChanged(object sender, WinControls.TextChangedEventArgs e)
+        private void txtProfilesPath_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtProfilesPath.Text.Length < 1)
             {
@@ -52,6 +97,7 @@ namespace SF2ProfileCreator_WPF
         private void btnProfilesPath_Click(object sender, RoutedEventArgs e)
         {
             OpenFolderDialog dialog = new();
+            dialog.DefaultDirectory = Directory.GetCurrentDirectory();
             dialog.ShowDialog();
             txtProfilesPath.Text = dialog.FolderName;
             UpdatePacksView();
@@ -59,19 +105,18 @@ namespace SF2ProfileCreator_WPF
         }
         private void profileButton_Click(object sender, EventArgs e)
         {
-            /*
-            if (sender is WinControls.Button btnFile)
-                txtProfile.Text = btnFile.Tag.ToString();
+            if (sender is Button btnFile)
+                AddProfile(btnFile);
             else txtProfile.Text = sender.GetType().FullName;
-            */
+            
         }
 
         private void UpdatePacksView()
         {
             
-            if (tabProfiles != null)
+            if (tabProfilesPackViewer != null)
             {
-                tabProfiles.Items.Clear();
+                tabProfilesPackViewer.Items.Clear();
                 string path = txtProfilesPath.Text;
                 if (Directory.Exists(path))
                 {
@@ -80,37 +125,45 @@ namespace SF2ProfileCreator_WPF
                         string[] dirs = Directory.GetDirectories(txtProfilesPath.Text);
                         for (int i = 0; i < dirs.Length; i++)
                         {
-                            WinControls.TabItem tabItem = new()
+                            IEnumerable<string> files = Directory.EnumerateFiles(dirs[i]).Where(s => s.EndsWith(".cfg"));
+                            if (files.Any())
                             {
-                                Header = Path.GetFileNameWithoutExtension(dirs[i]),
-                                Foreground = System.Windows.Media.Brushes.White
-                            };
-                            tabProfiles.Items.Add(tabItem);
-
-                            WinControls.ListView listView = new()
-                            {
-                                Width = 280,
-                                MaxWidth = 300,
-                                MaxHeight = 300
-                            };
-
-
-                            tabItem.Content = listView;
-
-                            string[] files = Directory.GetFiles(dirs[i]);
-                            for (int j = 0; j < files.Length; j++)
-                            {
-                                WinControls.Button btnFile = new()
+                                TabItem tabItem = new()
                                 {
-                                    Tag = files[j],
-                                    Content = Path.GetFileName(files[j]),
+                                    Header = Path.GetFileNameWithoutExtension(dirs[i]),
                                     Foreground = System.Windows.Media.Brushes.White
                                 };
-                                btnFile.Click += profileButton_Click;
+                                tabProfilesPackViewer.Items.Add(tabItem);
 
-                                listView.Items.Add(btnFile);
+                                ListView listView = new()
+                                {
+                                    Width = 280,
+                                    MaxWidth = 300,
+                                    VerticalAlignment = VerticalAlignment.Top
+                                };
+
+
+                                tabItem.Content = listView;
+
+                                foreach (string file in files)
+                                {
+                                    if (Path.GetExtension(file) == ".cfg")
+                                    {
+                                        Button btnFile = new()
+                                        {
+                                            Tag = file,
+                                            Content = Path.GetFileName(file),
+                                            Foreground = System.Windows.Media.Brushes.White
+                                        };
+                                        btnFile.Click += profileButton_Click;
+
+                                        listView.Items.Add(btnFile);
+                                    }
+                                }
                             }
                         }
+                        File.WriteAllText(Directory.GetCurrentDirectory() + "\\config.cfg", "profilePathSetting=" + path);
+                        Trace.WriteLine("profilePathSetting= Written To " + path);
                     }
                     else txtProfilesPath.Text = "Select Valid Packs Path.";
                 }
@@ -119,6 +172,54 @@ namespace SF2ProfileCreator_WPF
             
         }
 
-       
+        private void AddProfile(Button btnFile)
+        {
+            bool found = false;
+            for (int i = 0; i < tabProfiles.Items.Count; i++)
+            {
+                TabItem tabItem = (TabItem)tabProfiles.Items.GetItemAt(i);
+                if (tabItem.Tag.ToString() == Path.GetFileNameWithoutExtension(btnFile.Tag.ToString()))
+                {
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                TabItem tabItem = new()
+                {
+                    Tag = Path.GetFileNameWithoutExtension(btnFile.Tag.ToString()) ?? string.Empty,
+                    Header = new TabItemEx(this, Path.GetFileNameWithoutExtension(btnFile.Tag.ToString()) ?? string.Empty)
+                };
+                tabProfiles.Items.Add(tabItem);
+
+                ProfileProps profileProps = new()
+                {
+                    FilePath = btnFile.Tag.ToString() ?? string.Empty
+                };
+                tabItem.Content = profileProps;
+
+                if (tabProfiles.Items.Count == 1)
+                {
+                    tabItem.IsSelected = true;
+                }
+            }
+        }
+
+        public void CloseProfileTab(string profile)
+        {
+            for (int i = 0; i < tabProfiles.Items.Count; i++)
+            {
+                TabItem tabItem = (TabItem)tabProfiles.Items.GetItemAt(i);
+                if (profile == tabItem.Tag.ToString())
+                {
+                    tabProfiles.Items.RemoveAt(i);
+                    break;
+                }
+            }
+
+        }
+
+        
     }
 }

@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SF2ProfileCreator_WPF"
+        xmlns:local="clr-namespace:SF2ProfileCreator_WPF" 
+        xmlns:usercontrols="clr-namespace:SF2ProfileCreator_WPF.UserControls"
         mc:Ignorable="d" MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        WindowStyle="None" Height="500" Width="900">
+        WindowStyle="None" Height="600" Width="1200">
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
+        <WindowChrome GlassFrameThickness="5" CornerRadius="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
     <Grid Background="#FF525252">
         <Grid.RowDefinitions>
@@ -29,7 +30,9 @@
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
 
-                <Menu x:Name="menuTitleBar" Background="#FF5D5D5D" Foreground="White">
+                <Menu x:Name="menuTitleBar" Background="#FF5D5D5D" Foreground="White" 
+                      MouseDown="menuTitleBar_MouseDown"
+                      MouseLeftButtonDown="menuTitleBar_MouseLeftButtonDown">
                     <MenuItem Header="File" FontSize="14">
                         <MenuItem Header="New Profile" Background="#FF292929" BorderBrush="#FF292929" />
                         <MenuItem Header="Exit" Background="#FF292929" BorderBrush="#FF292929" />
@@ -68,7 +71,37 @@
             <Border Margin="5"
                     CornerRadius="15"
                     Background="#FF2D2D2D">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="txtProfilePlaceholder" 
+                                   Text="Select Profile Path."
+                                   FontSize="18"
+                                   Background="#FF2D2D2D"
+                                   Foreground="#a6a6a6"
+                                   Margin="2, 0, 0, 0"/>
+                        <TextBox x:Name="txtProfile" 
+                                 TextChanged="txtProfilesPath_TextChanged" 
+                                 Background="Transparent"/>
+                        <Button Grid.Column="1" Content="..."/>
+                        <Button Grid.Column="2" Content="Save"/>
+                    </Grid>
 
+                    <TabControl x:Name="tabProfiles" 
+                                Grid.Row="1">
+                        
+                        
+                    </TabControl>
+                </Grid>
+                
             </Border>
 
             <Border Grid.Column="1" 
@@ -93,7 +126,9 @@
                                    Background="#FF2D2D2D"
                                    Foreground="#a6a6a6"
                                    Margin="2, 0, 0, 0"/>
-                        <TextBox x:Name="txtProfilesPath" TextChanged="txtProfilesPath_TextChanged" Background="Transparent"/>
+                        <TextBox x:Name="txtProfilesPath" 
+                                 TextChanged="txtProfilesPath_TextChanged" 
+                                 Background="Transparent"/>
                         
 
                         <Button Grid.Column="1"
@@ -104,9 +139,10 @@
                     </Grid>
 
                     <!--ListView x:Name="listProfiles" Grid.Row="1"-->
-                    <TabControl x:Name="tabProfiles" Grid.Row="1">
+                    <TabControl x:Name="tabProfilesPackViewer" Grid.Row="1">
                         <TabItem Header="sdrgdrg" />
                         <TabItem Header="two"/>
+                        
                     </TabControl>
 
                 </Grid>

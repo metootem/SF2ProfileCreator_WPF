@@ -9,4 +9,111 @@
     <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\RenderModes\RENDERMODES.kra" />
+    <None Remove="Images\RenderModes\RENDER_ENVIRONMENTAL_1.png" />
+    <None Remove="Images\RenderModes\RENDER_ENVIRONMENTAL_2.png" />
+    <None Remove="Images\RenderModes\RENDER_NONE_1.png" />
+    <None Remove="Images\RenderModes\RENDER_NONE_2.png" />
+    <None Remove="Images\RenderModes\RENDER_NORMAL_1.png" />
+    <None Remove="Images\RenderModes\RENDER_NORMAL_2.png" />
+    <None Remove="Images\RenderModes\RENDER_TRANSCOLOR_1.png" />
+    <None Remove="Images\RenderModes\RENDER_TRANSCOLOR_2.png" />
+    <None Remove="Videos\RenderFX\RenderFX_Distort.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Explode.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Fade_Fast.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Fade_Slow.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Flicker_Fast.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Flicker_Slow.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Hologram.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Pulse_Fast.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Pulse_Fast_Wide.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Pulse_Fast_Wider.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Pulse_Slow.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Pulse_Slow_Wide.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Ragdoll.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Strobe_Fast.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Strobe_Faster.mp4" />
+    <None Remove="Videos\RenderFX\RenderFX_Strobe_Slow.mp4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\RenderModes\RENDER_ENVIRONMENTAL_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RenderModes\RENDER_ENVIRONMENTAL_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RenderModes\RENDER_NONE_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RenderModes\RENDER_NONE_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RenderModes\RENDER_NORMAL_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RenderModes\RENDER_NORMAL_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RenderModes\RENDER_TRANSCOLOR_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RenderModes\RENDER_TRANSCOLOR_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Distort.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Explode.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Fade_Fast.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Fade_Slow.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Flicker_Fast.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Flicker_Slow.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Hologram.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Pulse_Fast.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Pulse_Fast_Wide.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Pulse_Fast_Wider.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Pulse_Slow.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Pulse_Slow_Wide.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Ragdoll.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Strobe_Fast.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Strobe_Faster.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\RenderFX\RenderFX_Strobe_Slow.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FFME.Windows" Version="4.4.350" />
+  </ItemGroup>
+
 </Project>
