@@ -160,7 +160,6 @@ namespace SF2ProfileCreator_WPF.UserControls
                     break;
                 }
             }
-            txtProfileRaw.UpdateLayout();
             KvGoToSection(txtProfileName.Text);
 
             //Main
