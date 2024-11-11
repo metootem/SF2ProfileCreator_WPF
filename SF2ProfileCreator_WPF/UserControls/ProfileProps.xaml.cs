@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace SF2ProfileCreator_WPF.UserControls
@@ -74,8 +75,22 @@ namespace SF2ProfileCreator_WPF.UserControls
             {
                 filePath = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilePath"));
-                UpdateRawProfileViewer();
-                LoadProfileProps();
+                if (filePath != "New Profile")
+                {
+                    UpdateRawProfileViewer();
+                    LoadProfileProps();
+                }
+                else
+                {
+                    profileRawLine.Add("\"\"");
+                    profileRawLine.Add("{");
+                    profileRawLine.Add("}");
+                    for (int i = 0; i < profileRawLine.Count; i++)
+                    {
+                        txtProfileRaw.Text += profileRawLine[i] + '\n';
+                    }
+                    sectionLines = profileRawLine;
+                }
             }
         }
 
@@ -133,11 +148,19 @@ namespace SF2ProfileCreator_WPF.UserControls
 
         private void LoadProfileProps()
         {
-            foreach(char c in profileRawLine[0])
+            foreach(string line in sectionLines)
             {
-                if (c != '"')
-                    txtProfileName.Text += c;
+                if (line[0] != '\\' && line.Contains('"'))
+                {
+                    foreach(char c in line)
+                    {
+                        if (c != '"')
+                            txtProfileName.Text += c;
+                    }
+                    break;
+                }
             }
+            txtProfileRaw.UpdateLayout();
             KvGoToSection(txtProfileName.Text);
 
             //Main

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SF2ProfileCreator_WPF" 
         xmlns:usercontrols="clr-namespace:SF2ProfileCreator_WPF.UserControls"
-        mc:Ignorable="d" MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        mc:Ignorable="d"
         WindowStyle="None" Height="600" Width="1200">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="5" CornerRadius="0" CaptionHeight="0"/>
@@ -17,50 +17,26 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="30"/>
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="30"/>
-                </Grid.ColumnDefinitions>
+        <Grid x:Name="menuDrag" MouseLeftButtonDown="menuDrag_MouseLeftButtonDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
 
-                <Menu x:Name="menuTitleBar" Background="#FF5D5D5D" Foreground="White" 
-                      MouseDown="menuTitleBar_MouseDown"
-                      MouseLeftButtonDown="menuTitleBar_MouseLeftButtonDown">
-                    <MenuItem Header="File" FontSize="14">
-                        <MenuItem Header="New Profile" Background="#FF292929" BorderBrush="#FF292929" />
-                        <MenuItem Header="Exit" Background="#FF292929" BorderBrush="#FF292929" />
-                    </MenuItem>
-                </Menu>
+            <Border Background="#FF2D2D2D"/>
+            <TextBlock Text="SF2 Profile Creator" Margin="10" FontSize="25" Foreground="Silver"/>
 
-                <Button Name="btnMinimize" Grid.Column="1"  Click="btnMinimize_Click">
-                    <Rectangle Width="10" Height="1" Stroke="White"/>
-                </Button>
-                <Button Name="btnResize" Grid.Column="2"  Height="20" VerticalAlignment="Top" Click="btnResize_Click">
-                    <Rectangle Width="10" Height="10" Stroke="White"/>
-                </Button>
-                <Button Name="btnExit"  Grid.Column="3"  Content="X" Click="btnExit_Click"/>
-            </Grid>
-
-            <Grid Grid.Row="1" Background="#FF1F1F1F">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Width="30" Margin="5" Content="New"/>
-                <Button Width="80" Margin="5" Grid.Column="1" Content="Select Profile"/>
-                <Button Width="120" Margin="5" Grid.Column="2" Content="Select Pack Directory"/>
-            </Grid>
-
+            <Button Name="btnMinimize" Grid.Column="1"  Click="btnMinimize_Click">
+                <Rectangle Width="10" Height="1" Stroke="White"/>
+            </Button>
+            <Button Name="btnResize" Grid.Column="2" Click="btnResize_Click">
+                <Rectangle Width="10" Height="10" Stroke="White"/>
+            </Button>
+            <Button Name="btnExit" Click="btnExit_Click" Grid.Column="3">
+                <TextBlock Text="X" VerticalAlignment="Center" FontSize="15"/>
+            </Button>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -78,21 +54,19 @@
                     </Grid.RowDefinitions>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="60"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="txtProfilePlaceholder" 
-                                   Text="Select Profile Path."
-                                   FontSize="18"
-                                   Background="#FF2D2D2D"
-                                   Foreground="#a6a6a6"
-                                   Margin="2, 0, 0, 0"/>
-                        <TextBox x:Name="txtProfile" 
-                                 TextChanged="txtProfilesPath_TextChanged" 
-                                 Background="Transparent"/>
-                        <Button Grid.Column="1" Content="..."/>
-                        <Button Grid.Column="2" Content="Save"/>
+                        <Button x:Name="btnNewProfile" Click="btnNewProfile_Click">
+                            <TextBlock Text="New Profile" VerticalAlignment="Center"/>
+                        </Button>
+                        <Button x:Name="btnSelectProfile" Grid.Column="1" Click="btnSelectProfile_Click">
+                            <TextBlock Text="Select Profile" VerticalAlignment="Center"/>
+                        </Button>
+                        <Button x:Name="btnSaveProfile" Grid.Column="2" Width="90" HorizontalAlignment="Right">
+                            <TextBlock Text="Save" VerticalAlignment="Center"/>
+                        </Button>
                     </Grid>
 
                     <TabControl x:Name="tabProfiles" 

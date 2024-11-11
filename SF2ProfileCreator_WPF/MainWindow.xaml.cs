@@ -1,10 +1,13 @@
 ﻿using Microsoft.Win32;
 using SF2ProfileCreator_WPF.UserControls;
+using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace SF2ProfileCreator_WPF
 {
@@ -50,17 +53,7 @@ namespace SF2ProfileCreator_WPF
                 Trace.WriteLine("Config Not Found.");
         }
 
-        private void menuTitleBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            //DragMove();
-        }
-
-        private void menuTitleBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            //DragMove();
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void menuDrag_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DragMove();
         }
@@ -106,9 +99,26 @@ namespace SF2ProfileCreator_WPF
         private void profileButton_Click(object sender, EventArgs e)
         {
             if (sender is Button btnFile)
-                AddProfile(btnFile);
-            else txtProfile.Text = sender.GetType().FullName;
-            
+                AddProfile(btnFile.Tag.ToString() ?? string.Empty);
+        }
+
+        private void btnNewProfile_Click(object sender, RoutedEventArgs e)
+        {
+            CreateProfile();
+        }
+
+        private void btnSelectProfile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new()
+            {
+                DefaultDirectory = Directory.GetCurrentDirectory(),
+                Title = "Select .cfg file.",
+                Filter = "Config file (*.cfg)|*.cfg"
+            };
+            dialog.ShowDialog();
+            if (dialog.FileName == "")
+                return;
+            AddProfile(dialog.FileName);
         }
 
         private void UpdatePacksView()
@@ -172,13 +182,37 @@ namespace SF2ProfileCreator_WPF
             
         }
 
-        private void AddProfile(Button btnFile)
+        private void CreateProfile()
         {
+            TabItem tabItem = new()
+            {
+                Tag = "New Profile",
+                Header = new TabItemEx(this, "New Profile")
+            };
+            tabProfiles.Items.Add(tabItem);
+
+            ProfileProps profileProps = new()
+            {
+                FilePath = "New Profile"
+            };
+            tabItem.Content = profileProps;
+
+            if (tabProfiles.Items.Count == 1)
+            {
+                tabItem.IsSelected = true;
+            }
+        }
+
+        private void AddProfile(string path)
+        {
+            if (path == string.Empty)
+                return;
+
             bool found = false;
             for (int i = 0; i < tabProfiles.Items.Count; i++)
             {
                 TabItem tabItem = (TabItem)tabProfiles.Items.GetItemAt(i);
-                if (tabItem.Tag.ToString() == Path.GetFileNameWithoutExtension(btnFile.Tag.ToString()))
+                if (tabItem.Tag.ToString() == Path.GetFileNameWithoutExtension(path))
                 {
                     found = true;
                 }
@@ -188,14 +222,14 @@ namespace SF2ProfileCreator_WPF
             {
                 TabItem tabItem = new()
                 {
-                    Tag = Path.GetFileNameWithoutExtension(btnFile.Tag.ToString()) ?? string.Empty,
-                    Header = new TabItemEx(this, Path.GetFileNameWithoutExtension(btnFile.Tag.ToString()) ?? string.Empty)
+                    Tag = Path.GetFileNameWithoutExtension(path),
+                    Header = new TabItemEx(this, Path.GetFileNameWithoutExtension(path))
                 };
                 tabProfiles.Items.Add(tabItem);
 
                 ProfileProps profileProps = new()
                 {
-                    FilePath = btnFile.Tag.ToString() ?? string.Empty
+                    FilePath = path
                 };
                 tabItem.Content = profileProps;
 
@@ -219,7 +253,5 @@ namespace SF2ProfileCreator_WPF
             }
 
         }
-
-        
     }
 }

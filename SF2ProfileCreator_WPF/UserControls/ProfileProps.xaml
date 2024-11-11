@@ -590,7 +590,7 @@
         </TabControl>
         <Grid x:Name="gridRawProfile"
               HorizontalAlignment="Right"
-              Width="25"
+              Width="300"
               MinWidth="25"
               >
             <Grid.ColumnDefinitions>
